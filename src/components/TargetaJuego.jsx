@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { getResenasPorJuego } from '../services/api';
-import ToogleCompletado from './ToggleCompletado';
 import ModalResena from './ModalResena';
 import '../styles/TargetaJuego.css';
 import imagenPorDefecto from '../assets/pordefecto.jpg';
@@ -26,8 +25,16 @@ export default function TargetaJuego({ juego, usuario }) {
       <p>{juego.genero} | {juego.plataforma}</p>
       <p>Desarrollador: {juego.desarrollador}</p>
       <p>⭐ {juego.promedioPuntuacion}</p>
-      <ToogleCompletado juego={juego} />
+
+      {/* Indicador de completado */}
+      <div
+        className="status-indicator"
+        style={{ backgroundColor: juego.completado ? 'green' : 'red' }}
+      ></div>
+
+      {/* Modal de reseñas */}
       <ModalResena juegoId={juego._id} usuario={usuario} onResenaCreada={() => { }} />
+
       <div className="resenas">
         {resenas.map(r => (
           <div key={r._id} className="resena">
