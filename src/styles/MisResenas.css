@@ -1,0 +1,21 @@
+.mis-resenas {
+  padding: 2rem;
+  text-align: center;
+}
+
+.resena-item {
+  margin-bottom: 1rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.resena-id {
+  color: #00b4d8;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  text-decoration: underline;
+}
+
+.juego-preview {
+  margin-top: 2rem;
+}

@@ -1,0 +1,19 @@
+.barra-busqueda {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.barra-busqueda select,
+.barra-busqueda input {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: none;
+  background: #2c2c3f;
+  color: #f0f0f0;
+}
+
+.barra-busqueda button {
+  padding: 0.5rem 1rem;
+}

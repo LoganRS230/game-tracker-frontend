@@ -1,0 +1,88 @@
+.principal {
+  padding: 2rem;
+  text-align: center;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.encabezado-principal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.encabezado-principal h1 {
+  font-size: 2.5rem;
+  color: #cddafd;
+}
+
+/* === Slider de modo oscuro === */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #888;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #222;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* === Modo oscuro === */
+.principal.oscuro {
+  background: #0a0a0a;
+  color: #f0f0f0;
+}
+
+.principal.oscuro h1 {
+  color: #ffffff;
+}
+
+.principal.oscuro .collage-juegos,
+.principal.oscuro .sin-juegos {
+  color: #e0e0e0;
+}
+
+.collage-juegos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+

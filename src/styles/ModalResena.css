@@ -1,0 +1,24 @@
+.modal-resena {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modal-resena textarea {
+  resize: vertical;
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: #2c2c3f;
+  color: #f0f0f0;
+  border: none;
+}
+
+.modal-resena input[type="number"] {
+  width: 80px;
+  padding: 0.4rem;
+  border-radius: 6px;
+  background: #2c2c3f;
+  color: #f0f0f0;
+  border: none;
+}
