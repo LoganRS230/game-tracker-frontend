@@ -8,7 +8,6 @@ import '../styles/Principal.css';
 export default function Principal({ usuario }) {
   const [juegos, setJuegos] = useState([]);
   const [filtrados, setFiltrados] = useState([]);
-  const [modoOscuro, setModoOscuro] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,10 +31,12 @@ export default function Principal({ usuario }) {
   };
 
   return (
-    <div className={`principal ${modoOscuro ? 'oscuro' : ''}`}>
-    
+    <div className="principal">
+      <BarraBusqueda
+        onBuscar={manejarBusqueda}
+        onLimpiar={() => setFiltrados(juegos)}
+      />
 
-      <BarraBusqueda onBuscar={manejarBusqueda} />
 
       {filtrados.length === 0 ? (
         <div className="sin-juegos">

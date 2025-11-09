@@ -50,7 +50,7 @@ export default function FormularioJuego({ onJuegoCreado }) {
       <select name="genero" value={form.genero} onChange={handleChange} required>
         <option value="">Selecciona género</option>
         <option value="Acción">Acción</option>
-        <option value="Aventura">Aventura</option>
+        <option value="Platformer">Platformer</option>
         <option value="RPG">RPG</option>
         <option value="Shooter">Shooter</option>
         <option value="Estrategia">Estrategia</option>

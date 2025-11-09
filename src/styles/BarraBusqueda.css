@@ -9,11 +9,29 @@
 .barra-busqueda input {
   padding: 0.5rem;
   border-radius: 6px;
-  border: none;
+  border: 1px solid var(--border-color);
   background: #2c2c3f;
   color: #f0f0f0;
 }
 
 .barra-busqueda button {
   padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.barra-busqueda button:hover {
+  transform: scale(1.05);
+}
+
+/* Botón limpiar más específico */
+.barra-busqueda .clear-btn {
+  background: #f44336; /* rojo */
+  color: #fff;
+}
+
+.barra-busqueda .clear-btn:hover {
+  background: #d32f2f; /* rojo más oscuro */
 }

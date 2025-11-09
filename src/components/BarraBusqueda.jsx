@@ -1,20 +1,26 @@
 import { useState } from 'react';
-import { getJuegosPorTitulo, getJuegosPorDesarrollador } from '../services/api';
 import '../styles/BarraBusqueda.css';
 
-export default function BarraBusqueda({ onResultados }) {
+export default function BarraBusqueda({ onBuscar, onLimpiar }) {
   const [busqueda, setBusqueda] = useState('');
   const [modo, setModo] = useState('titulo');
 
-  const buscar = async () => {
-    try {
-      const res = modo === 'titulo'
-        ? await getJuegosPorTitulo(busqueda)
-        : await getJuegosPorDesarrollador(busqueda);
-      onResultados(res.data);
-    } catch (err) {
-      console.error(err.message);
-      onResultados([]);
+  const manejarClick = () => {
+    if (busqueda.trim() !== '') {
+      onBuscar(modo, busqueda);
+    }
+  };
+
+  const manejarEnter = (e) => {
+    if (e.key === 'Enter') {
+      manejarClick();
+    }
+  };
+
+  const limpiarBusqueda = () => {
+    setBusqueda('');
+    if (onLimpiar) {
+      onLimpiar(); // aquí sí resetea la lista en Principal
     }
   };
 
@@ -28,9 +34,11 @@ export default function BarraBusqueda({ onResultados }) {
         type="text"
         value={busqueda}
         onChange={e => setBusqueda(e.target.value)}
+        onKeyDown={manejarEnter}
         placeholder={`Buscar por ${modo}`}
       />
-      <button onClick={buscar}>Buscar</button>
+      <button onClick={manejarClick}>Buscar</button>
+      <button className="clear-btn" onClick={limpiarBusqueda}>✖</button>
     </div>
   );
 }
