@@ -1,0 +1,45 @@
+.reseña-modal {
+  max-width: 450px;
+  width: 90%;
+  background-color: #0a0f2c;
+  color: #f0f0f0;
+}
+
+.reseña-modal h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.star {
+  font-size: 2rem;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.star.filled {
+  color: gold;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+}
+
+.reseña-modal textarea {
+  width: 100%;
+  min-height: 80px;
+  margin-bottom: 1rem;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #12172f;
+  color: #f0f0f0;
+}
+
+.reseña-modal .modal-actions {
+  display: flex;
+  justify-content: space-between;
+}

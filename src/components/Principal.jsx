@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { getJuegos, getJuegosPorTitulo, getJuegosPorDesarrollador } from '../services/api';
 import TargetaJuego from './TargetaJuego';
 import BarraBusqueda from './BarraBusqueda';
+import JuegoModal from './JuegoModal';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Principal.css';
 
 export default function Principal({ usuario }) {
+  const [juegoSeleccionado, setJuegoSeleccionado] = useState(null);
   const [juegos, setJuegos] = useState([]);
   const [filtrados, setFiltrados] = useState([]);
   const navigate = useNavigate();
@@ -30,13 +32,26 @@ export default function Principal({ usuario }) {
     }
   };
 
+  // 🔹 Nuevo: manejar toggle de completado
+  const manejarToggleCompleto = (id, nuevoEstado) => {
+    setJuegos(prev =>
+      prev.map(j => j._id === id ? { ...j, completado: nuevoEstado } : j)
+    );
+    setFiltrados(prev =>
+      prev.map(j => j._id === id ? { ...j, completado: nuevoEstado } : j)
+    );
+    // También actualizamos el juego seleccionado si está abierto
+    if (juegoSeleccionado && juegoSeleccionado._id === id) {
+      setJuegoSeleccionado({ ...juegoSeleccionado, completado: nuevoEstado });
+    }
+  };
+
   return (
     <div className="principal">
       <BarraBusqueda
         onBuscar={manejarBusqueda}
         onLimpiar={() => setFiltrados(juegos)}
       />
-
 
       {filtrados.length === 0 ? (
         <div className="sin-juegos">
@@ -45,9 +60,19 @@ export default function Principal({ usuario }) {
         </div>
       ) : (
         <div className="collage-juegos">
-          {filtrados.map(j => (
-            <TargetaJuego key={j._id} juego={j} usuario={usuario} />
+          {filtrados.map((j) => (
+            <div key={j._id} onClick={() => setJuegoSeleccionado(j)}>
+              <TargetaJuego juego={j} />
+            </div>
           ))}
+
+          {juegoSeleccionado && (
+            <JuegoModal
+              juego={juegoSeleccionado}
+              onClose={() => setJuegoSeleccionado(null)}
+              onToggleCompleto={manejarToggleCompleto} // 🔹 pasamos función
+            />
+          )}
         </div>
       )}
     </div>

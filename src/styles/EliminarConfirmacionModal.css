@@ -1,0 +1,25 @@
+.eliminar-modal {
+  max-width: 400px;
+  width: 90%;
+  background-color: #0a0f2c;
+  color: #f0f0f0;
+  text-align: center;
+}
+
+.eliminar-modal h3 {
+  margin-bottom: 1.5rem;
+}
+
+.eliminar-modal .modal-actions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.eliminar-modal .eliminar-btn {
+  background: #f44336;
+  color: #fff;
+}
+
+.eliminar-modal .eliminar-btn:hover {
+  background: #d32f2f;
+}
