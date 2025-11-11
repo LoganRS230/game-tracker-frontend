@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { actualizarJuego } from '../services/api';
 import '../styles/EditarJuegoModal.css';
 
-export default function EditarJuegoModal({ juego, onClose }) {
+export default function EditarJuegoModal({ juego, onClose, onJuegoActualizado }) {
     const [formData, setFormData] = useState({
         titulo: juego.titulo,
         desarrollador: juego.desarrollador,
@@ -13,22 +14,54 @@ export default function EditarJuegoModal({ juego, onClose }) {
         plataformaPersonalizada: ""
     });
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleActualizar = () => {
-        const generoFinal = formData.genero === "Otro" ? formData.generoPersonalizado : formData.genero;
-        const plataformaFinal = formData.plataforma === "Otro" ? formData.plataformaPersonalizada : formData.plataforma;
+    const handleActualizar = async () => {
+        try {
+            setLoading(true);
+            setError("");
 
-        const juegoActualizado = {
-            ...formData,
-            genero: generoFinal,
-            plataforma: plataformaFinal
-        };
+            const generoFinal = formData.genero === "Otro" ? formData.generoPersonalizado : formData.genero;
+            const plataformaFinal = formData.plataforma === "Otro" ? formData.plataformaPersonalizada : formData.plataforma;
 
-        console.log("Juego actualizado:", juegoActualizado);
-        onClose();
+            const juegoActualizado = {
+                titulo: formData.titulo,
+                desarrollador: formData.desarrollador,
+                plataforma: plataformaFinal,
+                genero: generoFinal,
+                añoLanzamiento: parseInt(formData.añoLanzamiento),
+                descripcion: formData.descripcion
+            };
+
+            // Validación básica
+            if (!juegoActualizado.titulo || !juegoActualizado.desarrollador || !juegoActualizado.plataforma || 
+                !juegoActualizado.genero || !juegoActualizado.añoLanzamiento) {
+                setError("Por favor completa todos los campos obligatorios");
+                setLoading(false);
+                return;
+            }
+
+            const response = await actualizarJuego(juego._id, juegoActualizado);
+            
+            if (response.success) {
+                if (onJuegoActualizado) {
+                    onJuegoActualizado(response.data);
+                }
+                onClose();
+            } else {
+                setError(response.mensaje || "Error al actualizar el juego");
+            }
+        } catch (error) {
+            setError(error.message || "Error al actualizar el juego");
+            console.error("Error:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -36,6 +69,7 @@ export default function EditarJuegoModal({ juego, onClose }) {
             <div className="modal-content editar-modal">
                 <button className="close-btn" onClick={onClose}>✖</button>
                 <h3>Editar juego</h3>
+                {error && <p className="error-message">{error}</p>}
                 <form>
                     {/* Título */}
                     <label>Título:</label>
@@ -113,8 +147,10 @@ export default function EditarJuegoModal({ juego, onClose }) {
                     ></textarea>
                 </form>
                 <div className="modal-actions">
-                    <button onClick={handleActualizar}>Actualizar</button>
-                    <button onClick={onClose}>Cancelar</button>
+                    <button onClick={handleActualizar} disabled={loading}>
+                        {loading ? "Actualizando..." : "Actualizar"}
+                    </button>
+                    <button onClick={onClose} disabled={loading}>Cancelar</button>
                 </div>
             </div>
         </div>

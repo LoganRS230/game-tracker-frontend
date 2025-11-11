@@ -32,7 +32,7 @@ export default function Principal({ usuario }) {
     }
   };
 
-  // 🔹 Nuevo: manejar toggle de completado
+  // 🔹 Manejar toggle de completado
   const manejarToggleCompleto = (id, nuevoEstado) => {
     setJuegos(prev =>
       prev.map(j => j._id === id ? { ...j, completado: nuevoEstado } : j)
@@ -44,6 +44,24 @@ export default function Principal({ usuario }) {
     if (juegoSeleccionado && juegoSeleccionado._id === id) {
       setJuegoSeleccionado({ ...juegoSeleccionado, completado: nuevoEstado });
     }
+  };
+
+  // 🔹 Manejar cuando se actualiza un juego
+  const manejarJuegoActualizado = (juegoActualizado) => {
+    setJuegos(prev =>
+      prev.map(j => j._id === juegoActualizado._id ? juegoActualizado : j)
+    );
+    setFiltrados(prev =>
+      prev.map(j => j._id === juegoActualizado._id ? juegoActualizado : j)
+    );
+    setJuegoSeleccionado(juegoActualizado);
+  };
+
+  // 🔹 Manejar cuando se elimina un juego
+  const manejarJuegoEliminado = (juegoId) => {
+    setJuegos(prev => prev.filter(j => j._id !== juegoId));
+    setFiltrados(prev => prev.filter(j => j._id !== juegoId));
+    setJuegoSeleccionado(null);
   };
 
   return (
@@ -70,7 +88,9 @@ export default function Principal({ usuario }) {
             <JuegoModal
               juego={juegoSeleccionado}
               onClose={() => setJuegoSeleccionado(null)}
-              onToggleCompleto={manejarToggleCompleto} // 🔹 pasamos función
+              onToggleCompleto={manejarToggleCompleto}
+              onJuegoActualizado={manejarJuegoActualizado}
+              onJuegoEliminado={manejarJuegoEliminado}
             />
           )}
         </div>

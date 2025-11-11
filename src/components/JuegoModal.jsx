@@ -8,7 +8,7 @@ import ReseñaModal from './ReseñaModal';
 import EliminarConfirmacionModal from './EliminarConfirmacionModal';
 import ComentariosModal from './ComentariosModal';
 
-export default function JuegoModal({ juego, onClose, onToggleCompleto }) {
+export default function JuegoModal({ juego, onClose, onToggleCompleto, onJuegoActualizado, onJuegoEliminado }) {
   if (!juego) return null;
 
   const [abrirEditar, setAbrirEditar] = useState(false);
@@ -18,17 +18,33 @@ export default function JuegoModal({ juego, onClose, onToggleCompleto }) {
 
   // Estado para el slider de completo/incompleto
   const [completo, setCompleto] = useState(juego.completado || false);
+  // Estado reactivo del juego para reflejar cambios
+  const [juegoActual, setJuegoActual] = useState(juego);
 
-  const portada = juego.imagenPortada && juego.imagenPortada.trim() !== ''
-    ? juego.imagenPortada
+  const portada = juegoActual.imagenPortada && juegoActual.imagenPortada.trim() !== ''
+    ? juegoActual.imagenPortada
     : imagenPorDefecto;
 
   const handleToggle = () => {
     const nuevoEstado = !completo;
     setCompleto(nuevoEstado);
     if (onToggleCompleto) {
-      onToggleCompleto(juego._id, nuevoEstado); // 🔹 avisamos al padre
+      onToggleCompleto(juegoActual._id, nuevoEstado);
     }
+  };
+
+  const handleJuegoActualizado = (juegoActualizado) => {
+    setJuegoActual(juegoActualizado);
+    if (onJuegoActualizado) {
+      onJuegoActualizado(juegoActualizado);
+    }
+  };
+
+  const handleJuegoEliminado = (juegoId) => {
+    if (onJuegoEliminado) {
+      onJuegoEliminado(juegoId);
+    }
+    onClose();
   };
 
   return (
@@ -48,10 +64,10 @@ export default function JuegoModal({ juego, onClose, onToggleCompleto }) {
           {/* Línea superior: tags + año + slider */}
           <div className="modal-top">
             <div className="modal-tags">
-              <span className={`tag ${juego.genero?.toLowerCase() || 'default'}`}>
-                {juego.genero}
+              <span className={`tag ${juegoActual.genero?.toLowerCase() || 'default'}`}>
+                {juegoActual.genero}
               </span>
-              <span className="tag anio">{juego.añoLanzamiento}</span>
+              <span className="tag anio">{juegoActual.añoLanzamiento}</span>
             </div>
 
             {/* Slider de estado */}
@@ -71,13 +87,13 @@ export default function JuegoModal({ juego, onClose, onToggleCompleto }) {
           </div>
 
           {/* Título centralizado */}
-          <h2 className="modal-title">{juego.titulo}</h2>
+          <h2 className="modal-title">{juegoActual.titulo}</h2>
 
           {/* Info alineada a la izquierda */}
           <div className="modal-info">
-            <p><strong>Desarrollador:</strong> {juego.desarrollador}</p>
-            <p><strong>Plataforma:</strong> {juego.plataforma}</p>
-            <p><strong>Descripción:</strong> {juego.descripcion || 'Sin descripción'}</p>
+            <p><strong>Desarrollador:</strong> {juegoActual.desarrollador}</p>
+            <p><strong>Plataforma:</strong> {juegoActual.plataforma}</p>
+            <p><strong>Descripción:</strong> {juegoActual.descripcion || 'Sin descripción'}</p>
           </div>
 
           <div className="modal-actions">
@@ -91,16 +107,30 @@ export default function JuegoModal({ juego, onClose, onToggleCompleto }) {
 
       {/* Submodales independientes */}
       {abrirEditar && (
-        <EditarJuegoModal juego={juego} onClose={() => setAbrirEditar(false)} />
+        <EditarJuegoModal 
+          juego={juegoActual} 
+          onClose={() => setAbrirEditar(false)}
+          onJuegoActualizado={handleJuegoActualizado}
+        />
       )}
       {abrirReseña && (
-        <ReseñaModal juego={juego} onClose={() => setAbrirReseña(false)} />
+        <ReseñaModal 
+          juego={juegoActual} 
+          onClose={() => setAbrirReseña(false)}
+        />
       )}
       {abrirEliminar && (
-        <EliminarConfirmacionModal juego={juego} onClose={() => setAbrirEliminar(false)} />
+        <EliminarConfirmacionModal 
+          juego={juegoActual} 
+          onClose={() => setAbrirEliminar(false)}
+          onJuegoEliminado={handleJuegoEliminado}
+        />
       )}
       {abrirComentarios && (
-        <ComentariosModal juego={juego} onClose={() => setAbrirComentarios(false)} />
+        <ComentariosModal 
+          juego={juegoActual} 
+          onClose={() => setAbrirComentarios(false)}
+        />
       )}
     </>
   );
