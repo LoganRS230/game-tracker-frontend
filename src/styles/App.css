@@ -3,6 +3,12 @@
   background-color: var(--bg-color);
   color: var(--text-color);
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-container > :last-child {
+  margin-top: auto;
 }
 
 .titulo-app {

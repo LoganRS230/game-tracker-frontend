@@ -4,6 +4,7 @@ import Principal from './components/Principal';
 import FormularioJuego from './components/FormularioJuego';
 import AcercaDe from './components/AcercaDe';
 import MisResenas from './components/MisResenas';
+import Footer from './components/Footer';
 import './styles/App.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/resenas" element={<MisResenas usuario={usuario} />} />
           <Route path="/acerca" element={<AcercaDe />} />
         </Routes>
+        <Footer />
       </Router>
     </div>
   );

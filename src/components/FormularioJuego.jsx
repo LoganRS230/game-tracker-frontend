@@ -108,8 +108,7 @@ export default function FormularioJuego({ onJuegoCreado }) {
   name="imagenPortada"
   value={form.imagenPortada}
   onChange={handleChange}
-  placeholder="URL portada (ej: https://...jpg)"
-  required
+  placeholder="URL portada (opcional - se usará imagen por defecto)"
 />
 
       <textarea name="descripcion" value={form.descripcion} onChange={handleChange} placeholder="Descripción" />

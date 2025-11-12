@@ -1,0 +1,49 @@
+.app-footer {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  margin-top: 40px;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.app-footer p {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+
+.developer-credit {
+  font-weight: 600;
+  opacity: 1;
+  font-size: 1rem;
+}
+
+.developer-credit strong {
+  color: #ffd700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 600px) {
+  .app-footer {
+    padding: 15px;
+    margin-top: 30px;
+  }
+
+  .app-footer p {
+    font-size: 0.9rem;
+  }
+
+  .developer-credit {
+    font-size: 0.95rem;
+  }
+}
