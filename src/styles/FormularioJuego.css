@@ -4,21 +4,110 @@
   gap: 1rem;
   max-width: 500px;
   margin: 2rem auto;
-  background: linear-gradient(135deg, #1a1a2e, #16213e);
   padding: 2rem;
+  background: #121212;
   border-radius: 12px;
-  color: #f0f0f0;
+  box-shadow: 0 0 12px rgba(255, 0, 221, 0.6);
 }
 
 .formulario-juego input,
+.formulario-juego select,
 .formulario-juego textarea {
   padding: 0.6rem;
+  border: 1px solid #2044d7;
   border-radius: 6px;
-  border: none;
-  background: #2c2c3f;
-  color: #f0f0f0;
+  background: #1e1e1e;
+  color: #e0e0e0;
+  font-size: 0.95rem;
+}
+
+.formulario-juego input:focus,
+.formulario-juego select:focus,
+.formulario-juego textarea:focus {
+  outline: none;
+  border-color: #ff00ff;
+  box-shadow: 0 0 8px #ff00ff;
 }
 
 .formulario-juego button {
-  align-self: center;
+  padding: 0.8rem;
+  background: linear-gradient(90deg, #0004ff, #ff00ff);
+  border: none;
+  border-radius: 6px;
+  color: #121212;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.formulario-juego button:hover {
+  transform: scale(1.05);
+}
+
+/* Contenedor */
+.toggle-completado {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Switch estilo modo oscuro */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #630202; /* rojo por defecto */
+  transition: 0.4s;
+  border-radius: 30px;
+  box-shadow: 0 0 8px #ff1744;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* Estado ON (completado) */
+.switch input:checked + .slider {
+  background-color: #055426; /* verde */
+  box-shadow: 0 0 8px #00ff80;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(30px);
+}
+
+/* Texto de estado */
+.estado {
+  font-weight: bold;
+  color: #e0e0e0;
+}
+
+.estado.completo {
+  color: #00ff80;
+}
+
+.estado.incompleto {
+  color: #ff1744;
 }

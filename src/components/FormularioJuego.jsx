@@ -26,6 +26,21 @@ export default function FormularioJuego({ onJuegoCreado }) {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    
+    // Validar URL de imagen
+    if (form.imagenPortada.trim()) {
+      try {
+        const url = new URL(form.imagenPortada);
+        if (!['http:', 'https:'].includes(url.protocol)) {
+          alert('La URL debe comenzar con http:// o https://');
+          return;
+        }
+      } catch (err) {
+        alert('URL de imagen inválida. Asegúrate de incluir http:// o https://');
+        return;
+      }
+    }
+
     const generoFinal = form.genero === 'Otro' ? form.generoOtro : form.genero;
     const plataformaFinal = form.plataforma === 'Otra' ? form.plataformaOtra : form.plataforma;
 
@@ -37,7 +52,18 @@ export default function FormularioJuego({ onJuegoCreado }) {
         añoLanzamiento: Number(form.añoLanzamiento)
       });
       onJuegoCreado(res.data);
-      setForm({ ...form, titulo: '', descripcion: '' });
+      setForm({
+        titulo: '',
+        genero: '',
+        generoOtro: '',
+        plataforma: '',
+        plataformaOtra: '',
+        añoLanzamiento: '',
+        desarrollador: '',
+        imagenPortada: '',
+        descripcion: '',
+        completado: false
+      });
     } catch (err) {
       alert(err.message);
     }
@@ -77,12 +103,31 @@ export default function FormularioJuego({ onJuegoCreado }) {
 
       <input name="añoLanzamiento" value={form.añoLanzamiento} onChange={handleChange} placeholder="Año" required />
       <input name="desarrollador" value={form.desarrollador} onChange={handleChange} placeholder="Desarrollador" required />
-      <input name="imagenPortada" value={form.imagenPortada} onChange={handleChange} placeholder="URL portada" />
+      <input
+  type="url"
+  name="imagenPortada"
+  value={form.imagenPortada}
+  onChange={handleChange}
+  placeholder="URL portada (ej: https://...jpg)"
+  required
+/>
+
       <textarea name="descripcion" value={form.descripcion} onChange={handleChange} placeholder="Descripción" />
-      <label>
-        <input type="checkbox" name="completado" checked={form.completado} onChange={handleChange} />
-        Completado
-      </label>
+      <div className="toggle-completado">
+  <label className="switch">
+    <input
+      type="checkbox"
+      checked={form.completado}
+      onChange={() =>
+        setForm(prev => ({ ...prev, completado: !prev.completado }))
+      }
+    />
+    <span className="slider"></span>
+  </label>
+  <span className={`estado ${form.completado ? "completo" : "incompleto"}`}>
+    {form.completado ? "Completado" : "Incompleto"}
+  </span>
+</div>
       <button type="submit">Agregar juego</button>
     </form>
   );

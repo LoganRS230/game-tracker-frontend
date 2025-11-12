@@ -1,21 +1,247 @@
 .mis-resenas {
+  max-width: 1000px;
+  margin: 2rem auto;
   padding: 2rem;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a0f2e 100%);
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+  color: #e0e0e0;
+}
+
+.mis-resenas h2 {
   text-align: center;
+  margin-bottom: 2rem;
+  color: #ff00ff;
+  font-size: 2rem;
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
 }
 
-.resena-item {
-  margin-bottom: 1rem;
-  cursor: pointer;
-  font-size: 0.95rem;
+.loading-message {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 2rem;
 }
 
-.resena-id {
-  color: #00b4d8;
+.no-resenas {
+  text-align: center;
+  color: #888;
+  padding: 2rem;
+  font-size: 1.1rem;
+}
+
+/* Grid de reseñas */
+.resenas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  gap: 1.5rem;
+}
+
+/* Tarjeta individual de reseña */
+.resena-card {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(255, 0, 255, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.resena-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 0, 255, 0.7);
+  box-shadow: 0 8px 25px rgba(255, 0, 255, 0.2);
+}
+
+.resena-contenedor {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+/* Portada del juego */
+.resena-portada-container {
+  flex-shrink: 0;
+  width: 120px;
+  height: 160px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 0, 255, 0.5);
+  background: #0a0f2c;
+}
+
+.resena-portada {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.resena-portada-container:hover .resena-portada {
+  transform: scale(1.05);
+}
+
+/* Contenido de la reseña */
+.resena-contenido {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.resena-titulo {
+  margin: 0 0 0.8rem 0;
+  color: #ff66ff;
+  font-size: 1.3rem;
   font-weight: bold;
-  margin-right: 0.5rem;
-  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.resena-card:hover .resena-titulo {
+  color: #ff00ff;
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+.resena-puntuacion {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.resena-puntuacion .stars {
+  font-size: 1.3rem;
+  color: #ffd700;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+.puntuacion-numero {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.resena-texto {
+  margin: 0 0 1rem 0;
+  color: #d0d0d0;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.resena-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 0, 255, 0.2);
+}
+
+.resena-fecha {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.resena-acciones {
+  display: flex;
+  gap: 0.8rem;
+}
+
+/* Botones de acción */
+.btn-ver-juego,
+.btn-editar-resena {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-ver-juego {
+  background: linear-gradient(135deg, #6a00ff 0%, #9d00ff 100%);
+  color: white;
+  box-shadow: 0 0 10px rgba(106, 0, 255, 0.4);
+}
+
+.btn-ver-juego:hover {
+  background: linear-gradient(135deg, #7a10ff 0%, #ad10ff 100%);
+  box-shadow: 0 0 15px rgba(106, 0, 255, 0.7);
+  transform: scale(1.05);
+}
+
+.btn-editar-resena {
+  background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+}
+
+.btn-editar-resena:hover {
+  background: linear-gradient(135deg, #10e4ff 0%, #10a9ff 100%);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.7);
+  transform: scale(1.05);
+}
+
+/* Estilos antiguos para compatibilidad */
+.resena-item {
+  padding: 0.8rem;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resena-link {
+  background: none;
+  border: none;
+  color: #ff00ff;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.resena-link:hover {
+  color: #b700ff;
 }
 
 .juego-preview {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #6a00ff;
+  border-radius: 8px;
+  background: #1e1e1e;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mis-resenas {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  .resena-contenedor {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .resena-portada-container {
+    width: 100%;
+    height: 200px;
+  }
+
+  .resena-texto {
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+  }
+
+  .btn-ver-juego,
+  .btn-editar-resena {
+    flex: 1;
+    text-align: center;
+  }
 }

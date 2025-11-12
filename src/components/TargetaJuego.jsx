@@ -16,13 +16,30 @@ export default function TargetaJuego({ juego }) {
     }
   };
 
+  const isValidImageUrl = (url) => {
+    if (!url || !url.trim()) return false;
+    try {
+      const urlObj = new URL(url);
+      return ['http:', 'https:'].includes(urlObj.protocol);
+    } catch (err) {
+      return false;
+    }
+  };
+
+  const imagenValida = isValidImageUrl(juego.imagenPortada) ? juego.imagenPortada : imagenPorDefecto;
+
   return (
     <div className="targeta-juego fade-in">
       <div className="card-inner">
         <img
-          src={juego.imagenPortada || imagenPorDefecto}
+          src={imagenValida}
           alt={juego.titulo}
-          onError={(e) => { e.target.src = imagenPorDefecto }}
+          onError={(e) => { 
+            if (e.target.src !== imagenPorDefecto) {
+              e.target.src = imagenPorDefecto;
+            }
+          }}
+          style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
         />
         <h3>{juego.titulo}</h3>
         <p>Desarrollador: {juego.desarrollador}</p>

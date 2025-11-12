@@ -1,11 +1,18 @@
-import '../styles/AcercaDe.css';
-
+import "../styles/AcercaDe.css";
 export default function AcercaDe() {
   return (
     <div className="acerca-de">
-      <h2>Acerca de GameTracker</h2>
-      <p>GameTracker es una app para gestionar tu biblioteca de videojuegos, agregar reseñas y explorar títulos por género, desarrollador o puntuación.</p>
-      <p>Desarrollado por Logan 💻</p>
+      <h2 className="titulo">✨ Acerca de GameTracker ✨</h2>
+      <p className="intro">
+        GameTracker es tu espacio para organizar y disfrutar tu biblioteca de videojuegos.
+      </p>
+      <ul className="features">
+        <li>📚 Añade juegos con sus detalles y portadas.</li>
+        <li>📝 Escribe reseñas y guarda tu experiencia.</li>
+        <li>🔍 Explora títulos por género, desarrollador o puntuación.</li>
+        <li>✅ Marca juegos como completados.</li>
+      </ul>
+      <p className="credit">Desarrollado por <span>Logan 💻</span></p>
     </div>
   );
 }
